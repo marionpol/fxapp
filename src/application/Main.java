@@ -1,58 +1,64 @@
 package application;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafx.scene.layout.BorderPane;
+
 
 public class Main extends Application {
 
     @Override
-    public void start(Stage window) {
-
-        Label firstView = new Label("First View");
-        BorderPane layout = new BorderPane();
-
-        Button first = new Button("To the second view");
-        layout.setTop(firstView);
-        layout.setCenter(first);
-
-        VBox secondVbox = new VBox();
-        Button second = new Button("To the third view");
-        Label secondView = new Label("Second View");
-        secondVbox.getChildren().add(second);
-        secondVbox.getChildren().add(secondView);
-
-        GridPane grid = new GridPane();
-        Label thirdView = new Label("Third View");
-        grid.add(thirdView, 0, 0);
-        Button third = new Button("To the first view");
-        grid.add(third, 1, 1);
+    public void start(Stage window) throws Exception {
 
 
-        Scene firstV = new Scene(layout);
-        Scene secondV = new Scene(secondVbox);
-        Scene thirdV = new Scene(grid);
+        Label instructionText = new Label("Enter your name and start.");
+        TextField nameField = new TextField();
+        Button startButton = new Button("Start");
+        Label errorMessage = new Label("");
 
-        first.setOnAction((event) -> {
-            window.setScene(secondV);
+
+        GridPane layout = new GridPane();
+
+        layout.add(instructionText, 0, 0);
+        layout.add(nameField, 0, 1);
+        layout.add(startButton, 0, 2);
+        layout.add(errorMessage, 0, 3);
+
+
+        layout.setPrefSize(300, 180);
+        layout.setAlignment(Pos.CENTER);
+        layout.setVgap(10);
+        layout.setHgap(10);
+        layout.setPadding(new Insets(20, 20, 20, 20));
+
+
+        Scene nameView = new Scene(layout);
+
+
+        Label welcomeText = new Label("Welcome " + nameField);
+
+        StackPane welcomeLayout = new StackPane();
+        welcomeLayout.setPrefSize(300, 180);
+        welcomeLayout.getChildren().add(welcomeText);
+        welcomeLayout.setAlignment(Pos.CENTER);
+
+        Scene welcomeView = new Scene(welcomeLayout);
+
+        startButton.setOnAction((event) -> {
+            String enteredName = nameField.getText();
+            welcomeText.setText("Welcome " + enteredName + "!");
+            window.setScene(welcomeView);
         });
 
-        second.setOnAction((event) -> {
-            window.setScene(thirdV);
-        });
-
-        third.setOnAction((event) -> {
-            window.setScene(firstV);
-        });
-
-
-
-        window.setScene(firstV);
+        window.setScene(nameView);
         window.show();
     }
 
