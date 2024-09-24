@@ -2,26 +2,22 @@ package application;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.scene.control.TextField;
+
+
 
 public class Main extends Application {
 
     @Override
     public void start(Stage window) {
-        TextField textComponent = new TextField("This is a textfield");
-        Button buttonComponent = new Button("This is a button");
+        BorderPane layout = new BorderPane();
+        layout.setTop(new Label("North"));
+        layout.setRight(new Label("East"));
+        layout.setBottom(new Label("South"));
 
-        FlowPane componentGroup = new FlowPane();
-
-        componentGroup.getChildren().add(textComponent);
-        componentGroup.getChildren().add(buttonComponent);
-
-
-        Scene view = new Scene(componentGroup);
+        Scene view = new Scene(layout);
 
         window.setScene(view);
         window.show();
