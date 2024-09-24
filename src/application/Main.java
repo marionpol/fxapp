@@ -6,60 +6,66 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-
 
 public class Main extends Application {
 
     @Override
     public void start(Stage window) throws Exception {
 
+        // 1. Create main layout
+        BorderPane layout = new BorderPane();
 
-        Label instructionText = new Label("Enter your name and start.");
-        TextField nameField = new TextField();
-        Button startButton = new Button("Start");
-        Label errorMessage = new Label("");
+        // 1.1. Create menu for main layout
+        HBox menu = new HBox();
+        menu.setPadding(new Insets(20, 20, 20, 20));
+        menu.setSpacing(10);
 
+        // 1.2. Create buttons for menu
+        Button first = new Button("Joke");
+        Button second = new Button("Answer");
+        Button third = new Button("Explanation");
 
-        GridPane layout = new GridPane();
+        // 1.3. Add buttons to menu
+        menu.getChildren().addAll(first, second, third);
 
-        layout.add(instructionText, 0, 0);
-        layout.add(nameField, 0, 1);
-        layout.add(startButton, 0, 2);
-        layout.add(errorMessage, 0, 3);
-
-
-        layout.setPrefSize(300, 180);
-        layout.setAlignment(Pos.CENTER);
-        layout.setVgap(10);
-        layout.setHgap(10);
-        layout.setPadding(new Insets(20, 20, 20, 20));
+        layout.setTop(menu);
 
 
-        Scene nameView = new Scene(layout);
+        // 2. Add subviews and add them to the menu buttons
+        // 2.1. Create subview layout
+        StackPane firstLayout = createView("Why did the old man fall down the well?");
+        StackPane secondLayout = createView("He couldn't see that well.");
+        StackPane thirdLayout = createView("Old men don't usually have great eyesight so he fell down the well.");
+
+        // 2.2. Add subviews to button. Pressing the buttons will change the view
+        first.setOnAction((event) -> layout.setCenter(firstLayout));
+        second.setOnAction((event) -> layout.setCenter(secondLayout));
+        third.setOnAction((event) -> layout.setCenter(thirdLayout));
+
+        // 2.3. Set initial view
+        layout.setCenter(firstLayout);
+
+        // 3. Create main scene with layout
+        Scene scene = new Scene(layout);
 
 
-        Label welcomeText = new Label("Welcome " + nameField);
-
-        StackPane welcomeLayout = new StackPane();
-        welcomeLayout.setPrefSize(300, 180);
-        welcomeLayout.getChildren().add(welcomeText);
-        welcomeLayout.setAlignment(Pos.CENTER);
-
-        Scene welcomeView = new Scene(welcomeLayout);
-
-        startButton.setOnAction((event) -> {
-            String enteredName = nameField.getText();
-            welcomeText.setText("Welcome " + enteredName + "!");
-            window.setScene(welcomeView);
-        });
-
-        window.setScene(nameView);
+        // 4. Show the main scene
+        window.setScene(scene);
         window.show();
+    }
+
+    private StackPane createView(String text) {
+
+        StackPane layout = new StackPane();
+        layout.setPrefSize(300, 180);
+        layout.getChildren().add(new Label(text));
+        layout.setAlignment(Pos.CENTER);
+
+        return layout;
     }
 
     public static void main(String[] args) {
