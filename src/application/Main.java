@@ -6,13 +6,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage window) {
+        TextField textComponent = new TextField("This is a textfield");
         Button buttonComponent = new Button("This is a button");
-        Label textComponent = new Label("Text element");
 
         FlowPane componentGroup = new FlowPane();
 
